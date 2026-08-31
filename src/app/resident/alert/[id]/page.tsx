@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Card from '@/components/ui/Card';
 import styles from './page.module.css';
 
+import { ArrowLeft, PhoneCall } from 'lucide-react';
+
 interface SensorDetail {
   houseNumber: string;
   id: string;
@@ -41,8 +43,8 @@ export default function ResidentAlertPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => router.push('/resident/dashboard')}>
-        ← Back to My House
+      <button className={styles.backBtn} onClick={() => router.push('/resident/dashboard')} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+        <ArrowLeft size={16} /> Back to My House
       </button>
 
       <Card className={styles.alertCard}>
@@ -74,9 +76,29 @@ export default function ResidentAlertPage({ params }: { params: Promise<{ id: st
 
         <div className={styles.actionArea}>
           <p className={styles.actionNote}>
-            Please check the affected area immediately to prevent water damage.<br />
-            Our engineering team has been notified.
+            โปรดตรวจสอบบริเวณจุดเกิดเหตุทันทีเพื่อป้องกันความเสียหาย<br />
+            ระบบได้ทำการส่งการแจ้งเตือนไปยังวิศวกร/ช่างประจำโครงการเรียบร้อยแล้ว
           </p>
+          <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+            <a
+              href="tel:021234567"
+              className="glass-panel"
+              style={{
+                padding: '0.75rem 1.5rem',
+                color: '#ffffff',
+                background: 'rgba(16, 185, 129, 0.3)',
+                border: '1px solid rgba(16, 185, 129, 0.6)',
+                borderRadius: '8px',
+                fontWeight: 600,
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              <PhoneCall size={18} /> โทรหานิติบุคคล / ช่างโครงการ
+            </a>
+          </div>
         </div>
       </Card>
     </div>

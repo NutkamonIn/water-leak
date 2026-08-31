@@ -35,7 +35,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  animation: pulse-red 2s infinite;
 }
 
 .alertText {

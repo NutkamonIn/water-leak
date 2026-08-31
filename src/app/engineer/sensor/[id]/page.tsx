@@ -7,6 +7,9 @@ import StatusBadge from '@/components/ui/StatusBadge';
 import SensorChart from '@/components/ui/SensorChart';
 import styles from './page.module.css';
 
+import { ArrowLeft } from 'lucide-react';
+import HistoricalLineChart, { HistoryPoint } from '@/components/ui/HistoricalLineChart';
+
 type Status = 'normal' | 'warning' | 'leak' | 'offline';
 
 interface SensorDetail {
@@ -19,6 +22,7 @@ interface SensorDetail {
   threshold?: number;
   battery?: number;
   lastSeen: string;
+  history?: HistoryPoint[];
 }
 
 export default function SensorDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -48,8 +52,8 @@ export default function SensorDetailPage({ params }: { params: Promise<{ id: str
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => router.push(`/engineer/house/${houseId}`)}>
-        ← Back to House {sensor.houseNumber}
+      <button className={styles.backBtn} onClick={() => router.push(`/engineer/house/${houseId}`)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+        <ArrowLeft size={16} /> Back to House {sensor.houseNumber}
       </button>
 
       <Card>
@@ -80,11 +84,14 @@ export default function SensorDetailPage({ params }: { params: Promise<{ id: str
 
         {sensor.type === 'detection' && (
           <div className={styles.chartSection}>
-            <h3 className={styles.label} style={{ marginBottom: '1.5rem' }}>Water Level Analysis</h3>
+            <h3 className={styles.label} style={{ marginBottom: '1.5rem' }}>Water Level Analysis & Trend</h3>
             <SensorChart 
               currentValue={sensor.value || 0} 
               threshold={sensor.threshold || 50} 
             />
+            {sensor.history && (
+              <HistoricalLineChart history={sensor.history} threshold={sensor.threshold || 50} />
+            )}
           </div>
         )}
       </Card>

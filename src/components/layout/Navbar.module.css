@@ -37,6 +37,22 @@
   color: var(--text-secondary);
 }
 
+.switchRoleBtn {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #93c5fd;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.switchRoleBtn:hover {
+  background: rgba(59, 130, 246, 0.35);
+  color: #bfdbfe;
+}
+
 .logoutBtn {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid var(--surface-border);
@@ -44,7 +60,6 @@
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius-sm);
   cursor: pointer;
-  transition: var(--transition);
   font-weight: 500;
 }
 

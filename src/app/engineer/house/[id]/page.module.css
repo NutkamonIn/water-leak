@@ -18,20 +18,25 @@
 }
 
 .backBtn {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--surface-border);
+  color: var(--text-primary);
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  width: fit-content;
+  backdrop-filter: blur(8px);
 }
 
 .backBtn:hover {
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
 }
 
 .houseTitle {

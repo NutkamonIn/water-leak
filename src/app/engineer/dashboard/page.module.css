@@ -17,8 +17,8 @@
 
 .label {
   font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-weight: 600;
+  color: #e2e8f0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -29,18 +29,19 @@
   margin-top: 0.5rem;
 }
 
-.textNormal { color: var(--status-normal); }
-.textWarning { color: var(--status-warning); }
-.textLeak { color: var(--status-leak); }
-.textOffline { color: var(--status-offline); }
+.textNormal { color: #34d399; }
+.textWarning { color: #fbbf24; }
+.textLeak { color: #f87171; }
+.textOffline { color: #cbd5e1; }
 
 .alertsSection {
   margin-top: 1rem;
 }
 
 .sectionTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -58,16 +59,16 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1.5rem;
-  padding: 1rem;
-  background: var(--status-leak-bg);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 1rem 1.25rem;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.6);
   border-radius: var(--border-radius-md);
 }
 
 .alertHouse {
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #ffffff;
 }
 
 .alertDetails {
@@ -77,9 +78,9 @@
 }
 
 .alertSensor {
-  color: rgba(255, 255, 255, 0.9);
+  color: #ffffff;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .houseGrid {

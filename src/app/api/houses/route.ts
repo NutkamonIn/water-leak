@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getHouses, simulateDataTick } from '@/lib/mockData';
+import { getHouses } from '@/lib/mockData';
 
 export async function GET() {
-  // Tick the simulation slightly each time houses are fetched
-  simulateDataTick();
-  
   const houses = getHouses();
   
-  // Return houses without their detailed sensors list to save bandwidth in overview
-  const housesSummary = houses.map(({ id, houseNumber, status }) => ({
+  // Return houses summary with mapPosition for map rendering
+  const housesSummary = houses.map(({ id, houseNumber, status, mapPosition, lat, lng }) => ({
     id,
     houseNumber,
-    status
+    status,
+    mapPosition,
+    lat,
+    lng
   }));
 
   return NextResponse.json(housesSummary);

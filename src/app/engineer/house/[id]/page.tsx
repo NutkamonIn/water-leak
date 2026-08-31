@@ -2,6 +2,7 @@
 
 import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
+import { ArrowLeft, Navigation, CheckCircle2 } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import StatusBadge from '@/components/ui/StatusBadge';
 import SensorChart from '@/components/ui/SensorChart';
@@ -25,6 +26,8 @@ interface House {
   houseNumber: string;
   status: Status;
   sensors: Sensor[];
+  lat?: number;
+  lng?: number;
 }
 
 export default function HouseDetail({ params }: { params: Promise<{ id: string }> }) {
@@ -56,16 +59,65 @@ export default function HouseDetail({ params }: { params: Promise<{ id: string }
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => router.push('/engineer/dashboard')}>
-        ← Back to Dashboard
+      <button className={styles.backBtn} onClick={() => router.push('/engineer/dashboard')} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+        <ArrowLeft size={16} /> Back to Dashboard
       </button>
 
       <header className={styles.header}>
         <div className={styles.titleArea}>
           <h1 className={styles.houseTitle}>House {house.houseNumber}</h1>
-          <p style={{ color: 'var(--text-secondary)' }}>ID: {house.id}</p>
+          <p style={{ color: 'var(--text-secondary)' }}>ID: {house.id} • พิกัด: {house.lat?.toFixed(5) || '13.75670'}, {house.lng?.toFixed(5) || '100.50160'}</p>
         </div>
-        <StatusBadge status={house.status} size="lg" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          {house.status === 'leak' && (
+            <button
+              className="glass-panel"
+              style={{
+                padding: '0.6rem 1.2rem',
+                borderRadius: '8px',
+                color: '#ffffff',
+                background: 'rgba(16, 185, 129, 0.3)',
+                border: '1px solid rgba(16, 185, 129, 0.6)',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem'
+              }}
+              onClick={async () => {
+                await fetch('/api/simulate', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ houseNumber: house.houseNumber, action: 'reset' })
+                });
+                fetchHouse();
+              }}
+            >
+              <CheckCircle2 size={16} /> ซ่อมเสร็จแล้ว (ปิดงาน)
+            </button>
+          )}
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${house.lat || 13.7567},${house.lng || 100.5016}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-panel"
+            style={{
+              padding: '0.6rem 1.2rem',
+              borderRadius: '8px',
+              color: '#ffffff',
+              background: 'rgba(16, 185, 129, 0.25)',
+              border: '1px solid rgba(16, 185, 129, 0.5)',
+              textDecoration: 'none',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+          >
+            <Navigation size={16} /> นำทางด้วย Google Maps
+          </a>
+          <StatusBadge status={house.status} size="lg" />
+        </div>
       </header>
 
       {mainSensor && (

@@ -7,6 +7,8 @@ import StatusBadge from '@/components/ui/StatusBadge';
 import SensorChart from '@/components/ui/SensorChart';
 import styles from './page.module.css';
 
+import { AlertTriangle, Radio, Activity } from 'lucide-react';
+
 type Status = 'normal' | 'warning' | 'leak' | 'offline';
 
 interface Sensor {
@@ -70,7 +72,9 @@ export default function ResidentDashboard() {
       {activeLeak && (
         <div className={styles.alertBanner}>
           <div className={styles.alertText}>
-            <span className={styles.alertTitle}>WATER LEAK DETECTED</span>
+            <span className={styles.alertTitle} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+              <AlertTriangle size={18} /> WATER LEAK DETECTED
+            </span>
             <span>Location: {activeLeak.location} (Sensor: {activeLeak.id})</span>
           </div>
           <button 
