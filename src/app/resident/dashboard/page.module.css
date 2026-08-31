@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface-color);
+  padding: 2rem;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.houseTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.alertBanner {
+  background: var(--status-leak-bg);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 1.5rem;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: pulse-red 2s infinite;
+}
+
+.alertText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.alertTitle {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--status-leak);
+}
+
+.viewAlertBtn {
+  background: var(--status-leak);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sensorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.sensorCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sensorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sensorId {
+  font-weight: 600;
+}
+
+.sensorLocation {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

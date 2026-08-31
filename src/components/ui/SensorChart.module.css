@@ -1,0 +1,66 @@
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.safeText { color: var(--status-normal); }
+.dangerText { color: var(--status-leak); }
+
+.barBackground {
+  height: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-lg);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--surface-border);
+}
+
+.barFill {
+  height: 100%;
+  border-radius: var(--border-radius-lg);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.safeBg {
+  background: linear-gradient(90deg, #047857 0%, #10b981 100%);
+}
+
+.dangerBg {
+  background: linear-gradient(90deg, #be123c 0%, #ef4444 100%);
+}
+
+.thresholdMarker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 4px;
+  background-color: var(--status-warning);
+  z-index: 10;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}

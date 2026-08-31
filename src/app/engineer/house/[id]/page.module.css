@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.backBtn:hover {
+  color: var(--text-primary);
+}
+
+.houseTitle {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.mainSensorCard {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mainSensorInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.sensorName {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.lastSeen {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sensorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.sensorCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sensorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sensorId {
+  font-weight: 600;
+}
+
+.sensorLocation {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

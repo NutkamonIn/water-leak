@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  padding: 0;
+  width: fit-content;
+}
+
+.backBtn:hover {
+  color: var(--text-primary);
+}
+
+.alertCard {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+  animation: pulse-red 2s infinite;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.title {
+  color: var(--status-leak);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.timestamp {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius-sm);
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.leakValue {
+  color: var(--status-leak);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.actionArea {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.actionNote {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}

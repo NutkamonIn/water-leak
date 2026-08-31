@@ -1,34 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Color Palette (Dark Theme) */
+  --bg-color: #0f172a;           /* Deep dark slate */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --surface-color: rgba(30, 41, 59, 0.7); /* Glass surface */
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  
+  /* Status Colors */
+  --status-normal: #10b981;      /* Emerald Green */
+  --status-normal-bg: rgba(16, 185, 129, 0.15);
+  
+  --status-warning: #f59e0b;     /* Amber */
+  --status-warning-bg: rgba(245, 158, 11, 0.15);
+  
+  --status-leak: #ef4444;        /* Rose Red */
+  --status-leak-bg: rgba(239, 68, 68, 0.15);
+  
+  --status-offline: #64748b;     /* Slate Gray */
+  --status-offline-bg: rgba(100, 116, 139, 0.15);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Utilities */
+  --border-radius-lg: 16px;
+  --border-radius-md: 12px;
+  --border-radius-sm: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Glassmorphism Shadow */
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -37,13 +38,28 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Base Glassmorphism utility class that we can use across components */
+.glass-panel {
+  background: var(--surface-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-glass);
 }
