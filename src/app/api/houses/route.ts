@@ -16,3 +16,4 @@ export async function GET() {
 
   return NextResponse.json(housesSummary);
 }
+export const dynamic = 'force-dynamic';

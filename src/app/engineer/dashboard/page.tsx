@@ -80,6 +80,16 @@ export default function EngineerDashboard() {
     }
   };
 
+  const handleResetMockData = async () => {
+    try {
+      await fetch('/api/reset_mock', { method: 'POST' });
+      setAckedAlerts({});
+      fetchData();
+    } catch (err) {
+      console.error("Reset mock data error:", err);
+    }
+  };
+
   const handleAcknowledge = (alertId: string) => {
     setAckedAlerts(prev => ({ ...prev, [alertId]: true }));
   };
@@ -100,7 +110,15 @@ export default function EngineerDashboard() {
 
   return (
     <div className={styles.dashboard}>
-
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+        <button
+          onClick={handleResetMockData}
+          className="glass-panel"
+          style={{ padding: '0.4rem 0.8rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid var(--surface-border)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: 6, fontWeight: 600, fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+        >
+          <RotateCcw size={14} /> รีเซ็ตข้อมูลจำลองทั้งหมด
+        </button>
+      </div>
 
       {/* System Overview Stats */}
       <section>

@@ -237,3 +237,7 @@ export const resolveHouseAlert = (houseNumber: string) => {
   
   target.status = computeHouseStatus(target.sensors);
 };
+
+export const resetMockData = () => {
+  global._mockHouses = initialMockData();
+};

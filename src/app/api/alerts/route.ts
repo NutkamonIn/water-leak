@@ -5,3 +5,5 @@ export async function GET() {
   const alerts = getAlerts();
   return NextResponse.json(alerts);
 }
+
+export const dynamic = 'force-dynamic';
