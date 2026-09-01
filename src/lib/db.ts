@@ -196,10 +196,13 @@ const defaultPositions20 = [
   { x: 90, y: 88, lat: 13.72000, lng: 100.58000 }, 
 ];
 
-export const resetMockData = async () => {
+export const resetMockData = async (): Promise<{ success: boolean; error?: any }> => {
   // Clear all existing data
-  await supabase.from('sensors').delete().neq('id', 'dummy');
-  await supabase.from('houses').delete().neq('id', 'dummy');
+  const { error: err1 } = await supabase.from('sensors').delete().neq('id', 'dummy');
+  if (err1) return { success: false, error: err1 };
+
+  const { error: err2 } = await supabase.from('houses').delete().neq('id', 'dummy');
+  if (err2) return { success: false, error: err2 };
 
   // Insert houses
   const housesToInsert = [];
@@ -208,7 +211,7 @@ export const resetMockData = async () => {
     const pos = defaultPositions20[i - 1];
     housesToInsert.push({
       house_number: `A${num}`,
-      status: 'normal', // will be updated after sensors are added
+      status: 'normal',
       map_x: pos.x,
       map_y: pos.y,
       lat: pos.lat,
@@ -223,7 +226,7 @@ export const resetMockData = async () => {
     
   if (houseErr || !insertedHouses) {
     console.error("Failed to seed houses", houseErr);
-    return;
+    return { success: false, error: houseErr };
   }
 
   // Insert sensors
@@ -267,7 +270,8 @@ export const resetMockData = async () => {
     }
   }
 
-  await supabase.from('sensors').insert(sensorsToInsert);
+  const { error: sensorErr } = await supabase.from('sensors').insert(sensorsToInsert);
+  if (sensorErr) return { success: false, error: sensorErr };
 
   // Update house statuses
   for (const house of insertedHouses) {
@@ -275,4 +279,6 @@ export const resetMockData = async () => {
     const newStatus = computeHouseStatus(houseSensors as any);
     await supabase.from('houses').update({ status: newStatus }).eq('id', house.id);
   }
+
+  return { success: true };
 };

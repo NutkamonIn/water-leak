@@ -82,11 +82,17 @@ export default function EngineerDashboard() {
 
   const handleResetMockData = async () => {
     try {
-      await fetch('/api/reset_mock', { method: 'POST' });
-      setAckedAlerts({});
-      fetchData();
+      const res = await fetch('/api/reset_mock', { method: 'POST' });
+      if (!res.ok) {
+        const errData = await res.json();
+        alert(`Reset failed: ${errData.details ? JSON.stringify(errData.details) : errData.error}`);
+      } else {
+        setAckedAlerts({});
+        fetchData();
+      }
     } catch (err) {
-      console.error("Reset mock data error:", err);
+      console.error(err);
+      alert('Network error while resetting');
     }
   };
 
