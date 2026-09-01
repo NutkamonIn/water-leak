@@ -131,7 +131,7 @@ export default function RealGISMap({ houses }: RealGISMapProps) {
         const customIcon = L.divIcon({
           html: iconHtml,
           className: '', // disable default leaflet white box
-          iconSize: [0, 0], // Allow marker to size itself based on content
+          iconSize: null as any, // Allow marker to size itself based on content via CSS max-content
           iconAnchor: [0, 0], // The CSS transform will center it
         });
 
