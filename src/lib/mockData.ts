@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 export type SensorStatus = 'normal' | 'warning' | 'leak' | 'offline';
 
@@ -44,7 +45,7 @@ export interface House {
   lng: number;
 }
 
-const DATA_FILE = path.join(process.cwd(), '.mockData.json');
+const DATA_FILE = path.join(os.tmpdir(), 'water-leak-mock-data.json');
 
 const locations = [
   '[ชั้น 1] ห้องน้ำรับแขก (ใต้สายฉีด/ชักโครก)',
@@ -180,6 +181,14 @@ function initialMockData(): House[] {
   return houses;
 }
 
+function writeDataSafe(data: any) {
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error("Failed to write mock data to file system:", err);
+  }
+}
+
 export const getHouses = (): House[] => {
   try {
     if (fs.existsSync(DATA_FILE)) {
@@ -190,7 +199,7 @@ export const getHouses = (): House[] => {
     console.error("Error reading mock data:", err);
   }
   const initial = initialMockData();
-  fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2));
+  writeDataSafe(initial);
   return initial;
 };
 
@@ -232,10 +241,10 @@ export const resolveHouseAlert = (houseNumber: string) => {
   });
   
   target.status = computeHouseStatus(target.sensors);
-  fs.writeFileSync(DATA_FILE, JSON.stringify(houses, null, 2));
+  writeDataSafe(houses);
 };
 
 export const resetMockData = () => {
   const initial = initialMockData();
-  fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2));
+  writeDataSafe(initial);
 };
