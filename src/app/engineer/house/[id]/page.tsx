@@ -85,10 +85,10 @@ export default function HouseDetail({ params }: { params: Promise<{ id: string }
                 gap: '0.4rem'
               }}
               onClick={async () => {
-                await fetch('/api/simulate', {
+                await fetch('/api/resolve', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ houseNumber: house.houseNumber, action: 'reset' })
+                  body: JSON.stringify({ houseNumber: house.houseNumber })
                 });
                 fetchHouse();
               }}

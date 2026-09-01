@@ -222,31 +222,18 @@ export const getAlerts = (): Alert[] => {
   return alerts;
 };
 
-// Interactive simulation triggers for presentation demo
-export const triggerHouseSimulation = (houseNumber: string, action: 'leak' | 'reset') => {
+export const resolveHouseAlert = (houseNumber: string) => {
   const houses = getHouses();
   const target = houses.find(h => h.houseNumber === houseNumber);
   if (!target) return;
 
-  if (action === 'leak') {
-    const sensor = target.sensors.find(s => s.id === 'S03') || target.sensors[1];
-    if (sensor) {
-      sensor.status = 'leak';
-      sensor.value = 89;
-      sensor.history = generateHistory(true, 89);
+  target.sensors.forEach((sensor, idx) => {
+    if (sensor.type === 'detection' && target.status !== 'offline') {
+      sensor.status = 'normal';
+      sensor.value = 14 + idx;
+      sensor.history = generateHistory(false, 14 + idx);
     }
-  } else if (action === 'reset') {
-    target.sensors.forEach((sensor, idx) => {
-      if (sensor.type === 'detection' && target.status !== 'offline') {
-        sensor.status = 'normal';
-        sensor.value = 14 + idx;
-        sensor.history = generateHistory(false, 14 + idx);
-      }
-    });
-  }
+  });
+  
   target.status = computeHouseStatus(target.sensors);
-};
-
-export const resetAllSimulations = () => {
-  global._mockHouses = initialMockData();
 };

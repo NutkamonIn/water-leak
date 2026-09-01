@@ -67,16 +67,16 @@ export default function EngineerDashboard() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const handleSimulate = async (houseNumber: string, action: 'leak' | 'reset' | 'reset_all') => {
+  const handleResolveTicket = async (houseNumber: string) => {
     try {
-      await fetch('/api/simulate', {
+      await fetch('/api/resolve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ houseNumber, action })
+        body: JSON.stringify({ houseNumber })
       });
       fetchData();
     } catch (err) {
-      console.error("Simulation error:", err);
+      console.error("Resolve ticket error:", err);
     }
   };
 
@@ -100,38 +100,7 @@ export default function EngineerDashboard() {
 
   return (
     <div className={styles.dashboard}>
-      {/* Interactive Presentation Demo Controls */}
-      <section className="glass-panel" style={{ padding: '1rem 1.5rem', borderRadius: 12, border: '1px dashed rgba(59, 130, 246, 0.5)', background: 'rgba(30, 41, 59, 0.8)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <FlaskConical size={20} color="#60a5fa" />
-            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#60a5fa' }}>Demo Simulation Control</span>
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            <button
-              onClick={() => handleSimulate('A003', 'leak')}
-              className="glass-panel"
-              style={{ padding: '0.4rem 0.8rem', background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#fca5a5', cursor: 'pointer', borderRadius: 6, fontWeight: 600, fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-            >
-              <Droplets size={14} /> จำลองน้ำรั่วที่ A003
-            </button>
-            <button
-              onClick={() => handleSimulate('A012', 'leak')}
-              className="glass-panel"
-              style={{ padding: '0.4rem 0.8rem', background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#fca5a5', cursor: 'pointer', borderRadius: 6, fontWeight: 600, fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-            >
-              <Droplets size={14} /> จำลองน้ำรั่วที่ A012
-            </button>
-            <button
-              onClick={() => handleSimulate('', 'reset_all')}
-              className="glass-panel"
-              style={{ padding: '0.4rem 0.8rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid var(--surface-border)', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: 6, fontWeight: 600, fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-            >
-              <RotateCcw size={14} /> รีเซ็ตค่าเริ่มต้น
-            </button>
-          </div>
-        </div>
-      </section>
+
 
       {/* System Overview Stats */}
       <section>
@@ -192,7 +161,7 @@ export default function EngineerDashboard() {
                       <button
                         className="glass-panel"
                         style={{ padding: '0.5rem 1rem', cursor: 'pointer', border: '1px solid rgba(16, 185, 129, 0.6)', background: 'rgba(16, 185, 129, 0.3)', color: '#ffffff', borderRadius: '8px', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-                        onClick={() => handleSimulate(alert.houseNumber, 'reset')}
+                        onClick={() => handleResolveTicket(alert.houseNumber)}
                       >
                         <CheckCircle2 size={14} /> ปิดงาน (Resolve Ticket)
                       </button>
