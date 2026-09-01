@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getHouses } from '@/lib/mockData';
+import { getHouses } from '@/lib/db';
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const houses = getHouses();
+  const houses = await getHouses();
   
   const house = houses.find(h => h.id === id);
   

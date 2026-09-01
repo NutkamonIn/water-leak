@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getHouses } from '@/lib/mockData';
+import { getHouses } from '@/lib/db';
 
 export async function GET(
   request: Request,
@@ -13,7 +13,7 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
   }
 
-  const houses = getHouses();
+  const houses = await getHouses();
   const house = houses.find(h => h.id === houseId);
   
   if (!house) {

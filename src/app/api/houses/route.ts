@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { getHouses } from '@/lib/mockData';
+import { getHouses } from '@/lib/db';
 
 export async function GET() {
-  const houses = getHouses();
+  const houses = await getHouses();
   
   // Return houses summary with mapPosition for map rendering
   const housesSummary = houses.map(({ id, houseNumber, status, mapPosition, lat, lng }) => ({
