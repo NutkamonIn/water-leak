@@ -161,13 +161,22 @@ export default function RealGISMap({ houses }: RealGISMapProps) {
 
         const existingMarker = markersMapRef.current.get(house.id);
         if (existingMarker) {
-          // Update icon & popup content in-place without removing from map
-          existingMarker.setIcon(customIcon);
-          existingMarker.setPopupContent(popupContainer);
+          const isPopupOpen = existingMarker.isPopupOpen();
+          layerGroupRef.current.removeLayer(existingMarker);
+          markersMapRef.current.delete(house.id);
+          
+          const newMarker = L.marker([lat, lng], { icon: customIcon });
+          newMarker.bindPopup(popupContainer, { autoPan: false });
+          layerGroupRef.current.addLayer(newMarker);
+          markersMapRef.current.set(house.id, newMarker);
+          
+          if (isPopupOpen) {
+            newMarker.openPopup();
+          }
         } else {
           // Create new marker
           const newMarker = L.marker([lat, lng], { icon: customIcon });
-          newMarker.bindPopup(popupContainer);
+          newMarker.bindPopup(popupContainer, { autoPan: false });
           layerGroupRef.current.addLayer(newMarker);
           markersMapRef.current.set(house.id, newMarker);
         }
