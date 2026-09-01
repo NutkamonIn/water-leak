@@ -19,13 +19,16 @@ export async function POST(request: Request) {
     }
 
     if (email === 'resident@demo.com') {
+      const { supabase } = require('@/lib/supabase');
+      const { data: house } = await supabase.from('houses').select('id').eq('house_number', 'A002').single();
+      
       return NextResponse.json({
         user: {
           id: 'USER-002',
           name: 'Resident A002',
           email: 'resident@demo.com',
           role: 'resident',
-          houseId: 'HOUSE-002', // Bound to House A002 for demo
+          houseId: house ? house.id : 'NOT_FOUND', 
         },
         token: 'mock-jwt-token-resident',
       });

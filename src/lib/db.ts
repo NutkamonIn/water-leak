@@ -201,7 +201,7 @@ export const resetMockData = async (): Promise<{ success: boolean; error?: any }
   const { error: err1 } = await supabase.from('sensors').delete().neq('id', 'dummy');
   if (err1) return { success: false, error: err1 };
 
-  const { error: err2 } = await supabase.from('houses').delete().neq('id', 'dummy');
+  const { error: err2 } = await supabase.from('houses').delete().neq('house_number', 'dummy');
   if (err2) return { success: false, error: err2 };
 
   // Insert houses
