@@ -32,7 +32,7 @@ export default function ResidentLayout({ children }: { children: React.ReactNode
   if (!isAuthorized) return null;
 
   return (
-    <div style={{ padding: '0 2rem', maxWidth: '800px', margin: '0 auto' }}>
+    <div className="layout-resident">
       <Navbar role="resident" onLogout={handleLogout} />
       {children}
     </div>

@@ -66,3 +66,22 @@ a {
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-glass);
 }
+
+.layout-resident {
+  padding: 0 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.layout-engineer {
+  padding: 0 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .layout-resident,
+  .layout-engineer {
+    padding: 0 1rem;
+  }
+}

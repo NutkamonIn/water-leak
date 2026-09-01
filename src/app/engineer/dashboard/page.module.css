@@ -100,3 +100,28 @@
   font-weight: 700;
   color: var(--text-primary);
 }
+
+@media (max-width: 768px) {
+  .alertItem {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .alertHouse {
+    font-size: 1.2rem;
+  }
+  
+  .alertSensor {
+    font-size: 0.95rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

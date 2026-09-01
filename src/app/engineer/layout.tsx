@@ -32,7 +32,7 @@ export default function EngineerLayout({ children }: { children: React.ReactNode
   if (!isAuthorized) return null; // Avoid flicker
 
   return (
-    <div style={{ padding: '0 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <div className="layout-engineer">
       <Navbar role="engineer" onLogout={handleLogout} />
       {children}
     </div>
