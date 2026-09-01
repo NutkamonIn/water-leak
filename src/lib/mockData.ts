@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 export type SensorStatus = 'normal' | 'warning' | 'leak' | 'offline';
 
 export interface Alert {
@@ -34,12 +37,14 @@ export interface House {
   status: SensorStatus;
   sensors: Sensor[];
   mapPosition: {
-    x: number; // Percentage x (10-90%)
-    y: number; // Percentage y (10-90%)
+    x: number;
+    y: number;
   };
   lat: number;
   lng: number;
 }
+
+const DATA_FILE = path.join(process.cwd(), '.mockData.json');
 
 const locations = [
   '[ชั้น 1] ห้องน้ำรับแขก (ใต้สายฉีด/ชักโครก)',
@@ -54,7 +59,6 @@ const locations = [
 
 const staticLastSeen = "2026-08-31T10:28:31.000Z";
 
-// Mock 1-hour time-series points for graphs
 function generateHistory(isLeak: boolean, finalValue: number): SensorHistoryPoint[] {
   const times = ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25', '10:30'];
   if (isLeak) {
@@ -78,7 +82,6 @@ function generateHistory(isLeak: boolean, finalValue: number): SensorHistoryPoin
 function generateSensors(houseId: string, forceLeak: boolean = false, forceOffline: boolean = false): Sensor[] {
   const sensors: Sensor[] = [];
   
-  // Main Sensor
   sensors.push({
     id: `MAIN-${houseId}`,
     type: 'main',
@@ -87,17 +90,16 @@ function generateSensors(houseId: string, forceLeak: boolean = false, forceOffli
     lastSeen: staticLastSeen,
   });
 
-  // 8 Detection Sensors
   for (let i = 1; i <= 8; i++) {
     const sId = `S0${i}`;
     let sStatus: SensorStatus = forceOffline ? 'offline' : 'normal';
-    let val = 12 + (i * 2); // Deterministic normal value
+    let val = 12 + (i * 2); 
     const threshold = 50;
 
     const isLeakPoint = forceLeak && i === 3;
     if (isLeakPoint) {
       sStatus = 'leak';
-      val = 87; // Fixed leak value
+      val = 87; 
     }
 
     sensors.push({
@@ -128,35 +130,27 @@ export function computeHouseStatus(sensors: Sensor[]): SensorStatus {
   return 'normal';
 }
 
-// 20 Houses Map Coordinates (Soi 1 to Soi 4)
 const defaultPositions20 = [
-  // Soi 1 (A001 - A005)
-  { x: 15, y: 15, lat: 13.75700, lng: 100.50120 }, // A001
-  { x: 35, y: 15, lat: 13.75700, lng: 100.50160 }, // A002 (LEAK)
-  { x: 55, y: 15, lat: 13.75700, lng: 100.50200 }, // A003
-  { x: 75, y: 15, lat: 13.75700, lng: 100.50240 }, // A004
-  { x: 90, y: 15, lat: 13.75700, lng: 100.50280 }, // A005
-
-  // Soi 2 (A006 - A010)
-  { x: 15, y: 40, lat: 13.75650, lng: 100.50120 }, // A006
-  { x: 35, y: 40, lat: 13.75650, lng: 100.50160 }, // A007 (LEAK)
-  { x: 55, y: 40, lat: 13.75650, lng: 100.50200 }, // A008 (OFFLINE)
-  { x: 75, y: 40, lat: 13.75650, lng: 100.50240 }, // A009
-  { x: 90, y: 40, lat: 13.75650, lng: 100.50280 }, // A010
-
-  // Soi 3 (A011 - A015)
-  { x: 15, y: 65, lat: 13.75600, lng: 100.50120 }, // A011
-  { x: 35, y: 65, lat: 13.75600, lng: 100.50160 }, // A012
-  { x: 55, y: 65, lat: 13.75600, lng: 100.50200 }, // A013
-  { x: 75, y: 65, lat: 13.75600, lng: 100.50240 }, // A014
-  { x: 90, y: 65, lat: 13.75600, lng: 100.50280 }, // A015 (LEAK)
-
-  // Soi 4 (A016 - A020)
-  { x: 15, y: 88, lat: 13.75550, lng: 100.50120 }, // A016
-  { x: 35, y: 88, lat: 13.75550, lng: 100.50160 }, // A017
-  { x: 55, y: 88, lat: 13.75550, lng: 100.50200 }, // A018
-  { x: 75, y: 88, lat: 13.75550, lng: 100.50240 }, // A019
-  { x: 90, y: 88, lat: 13.75550, lng: 100.50280 }, // A020
+  { x: 15, y: 15, lat: 13.75700, lng: 100.50120 }, 
+  { x: 35, y: 15, lat: 13.75700, lng: 100.50160 }, 
+  { x: 55, y: 15, lat: 13.75700, lng: 100.50200 }, 
+  { x: 75, y: 15, lat: 13.75700, lng: 100.50240 }, 
+  { x: 90, y: 15, lat: 13.75700, lng: 100.50280 }, 
+  { x: 15, y: 40, lat: 13.75650, lng: 100.50120 }, 
+  { x: 35, y: 40, lat: 13.75650, lng: 100.50160 }, 
+  { x: 55, y: 40, lat: 13.75650, lng: 100.50200 }, 
+  { x: 75, y: 40, lat: 13.75650, lng: 100.50240 }, 
+  { x: 90, y: 40, lat: 13.75650, lng: 100.50280 }, 
+  { x: 15, y: 65, lat: 13.75600, lng: 100.50120 }, 
+  { x: 35, y: 65, lat: 13.75600, lng: 100.50160 }, 
+  { x: 55, y: 65, lat: 13.75600, lng: 100.50200 }, 
+  { x: 75, y: 65, lat: 13.75600, lng: 100.50240 }, 
+  { x: 90, y: 65, lat: 13.75600, lng: 100.50280 }, 
+  { x: 15, y: 88, lat: 13.75550, lng: 100.50120 }, 
+  { x: 35, y: 88, lat: 13.75550, lng: 100.50160 }, 
+  { x: 55, y: 88, lat: 13.75550, lng: 100.50200 }, 
+  { x: 75, y: 88, lat: 13.75550, lng: 100.50240 }, 
+  { x: 90, y: 88, lat: 13.75550, lng: 100.50280 }, 
 ];
 
 function initialMockData(): House[] {
@@ -166,7 +160,6 @@ function initialMockData(): House[] {
     const houseId = `HOUSE-${num}`;
     const houseNumber = `A${num}`;
     
-    // Scenario setup: A002, A007, A015 are LEAK. A008 is OFFLINE
     const forceLeak = (houseNumber === 'A002' || houseNumber === 'A007' || houseNumber === 'A015');
     const forceOffline = (houseNumber === 'A008');
     
@@ -187,16 +180,19 @@ function initialMockData(): House[] {
   return houses;
 }
 
-// Singleton for API routes to share memory during dev
-declare global {
-  var _mockHouses: House[] | undefined;
-}
-
-if (!global._mockHouses) {
-  global._mockHouses = initialMockData();
-}
-
-export const getHouses = () => global._mockHouses!;
+export const getHouses = (): House[] => {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      const data = fs.readFileSync(DATA_FILE, 'utf-8');
+      return JSON.parse(data);
+    }
+  } catch (err) {
+    console.error("Error reading mock data:", err);
+  }
+  const initial = initialMockData();
+  fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2));
+  return initial;
+};
 
 export const getAlerts = (): Alert[] => {
   const alerts: Alert[] = [];
@@ -236,8 +232,10 @@ export const resolveHouseAlert = (houseNumber: string) => {
   });
   
   target.status = computeHouseStatus(target.sensors);
+  fs.writeFileSync(DATA_FILE, JSON.stringify(houses, null, 2));
 };
 
 export const resetMockData = () => {
-  global._mockHouses = initialMockData();
+  const initial = initialMockData();
+  fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2));
 };
