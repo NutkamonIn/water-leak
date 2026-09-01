@@ -37,7 +37,7 @@ export default function HouseDetail({ params }: { params: Promise<{ id: string }
 
   const fetchHouse = async () => {
     try {
-      const res = await fetch(`/api/houses/${resolvedParams.id}`);
+      const res = await fetch(`/api/houses/${resolvedParams.id}`, { cache: 'no-store' });
       if (!res.ok) throw new Error('Not found');
       const data = await res.json();
       setHouse(data);

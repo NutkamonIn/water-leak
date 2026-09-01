@@ -47,8 +47,8 @@ export default function EngineerDashboard() {
   const fetchData = async () => {
     try {
       const [housesRes, alertsRes] = await Promise.all([
-        fetch('/api/houses'),
-        fetch('/api/alerts')
+        fetch('/api/houses', { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } }),
+        fetch('/api/alerts', { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } })
       ]);
       
       const housesData = await housesRes.json();
