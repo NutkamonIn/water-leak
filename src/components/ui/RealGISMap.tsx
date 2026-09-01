@@ -131,8 +131,8 @@ export default function RealGISMap({ houses }: RealGISMapProps) {
         const customIcon = L.divIcon({
           html: iconHtml,
           className: '', // disable default leaflet white box
-          iconSize: [80, 30],
-          iconAnchor: [40, 15],
+          iconSize: [0, 0], // Allow marker to size itself based on content
+          iconAnchor: [0, 0], // The CSS transform will center it
         });
 
         const popupContainer = document.createElement('div');
@@ -186,9 +186,7 @@ export default function RealGISMap({ houses }: RealGISMapProps) {
       const currentFilterKey = houses.map(h => h.id).sort().join(',');
       if (bounds.isValid() && prevFilterKeyRef.current !== currentFilterKey) {
         prevFilterKeyRef.current = currentFilterKey;
-        if (houses.length < 20) {
-          mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 18 });
-        }
+        mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 19 });
       }
     });
   }, [houses, router]);
